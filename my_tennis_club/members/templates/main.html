@@ -1,0 +1,110 @@
+{% extends "master.html" %}
+
+{% block title %}
+  My Tennis Club
+{% endblock %}
+
+{% block content %}
+
+<style>
+/* Fondo con animación suave */
+.portal-bg {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Burbujitas animadas */
+.portal-bg::before,
+.portal-bg::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 50%;
+    animation: float 6s infinite ease-in-out;
+}
+
+.portal-bg::after {
+    width: 300px;
+    height: 300px;
+    bottom: -50px;
+    right: -50px;
+    animation-duration: 8s;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-25px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Tarjeta principal */
+.portal-card {
+    background: white;
+    padding: 40px;
+    border-radius: 22px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    animation: fadein 0.8s ease;
+}
+
+@keyframes fadein {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.portal-title {
+    font-size: 38px;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.portal-subtitle {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Botón principal */
+.portal-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    background: #5a4ac4;
+    color: white;
+    font-size: 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.portal-btn:hover {
+    background: #4b3abd;
+    transform: scale(1.06);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+</style>
+
+
+<div class="portal-bg">
+    <div class="portal-card">
+        <h1 class="portal-title">My Tennis Club</h1>
+        <p class="portal-subtitle">Bienvenido al portal del club.  
+        Explora nuestros miembros y toda la comunidad deportiva.</p>
+
+        <a href="members/" class="portal-btn">
+            Ver Miembros
+        </a>
+    </div>
+</div>
+
+{% endblock %}

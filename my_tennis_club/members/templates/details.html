@@ -1,10 +1,106 @@
-{% extends "master.html" %} {% block title %} Details about {{
-mymember.firstname }} {{ mymember.lastname }} {% endblock %} {% block content %}
-<h1>{{ mymember.firstname }} {{ mymember.lastname }}</h1>
+{% extends "master.html" %}
 
-<p>Phone {{ mymember.phone }}</p>
-<p>Member since: {{ mymember.joined_date }}</p>
+{% block title %}
+  Perfil: {{ mymember.firstname }}
+{% endblock %}
 
-<p>Back to <a href="/members">Members</a></p>
+{% block content %}
+
+<style>
+/* Fondo suave */
+.contenido-principal {
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(6px);
+    padding: 35px;
+    border-radius: 18px;
+    max-width: 650px;
+    margin: 40px auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    animation: fadein 0.7s ease;
+}
+
+@keyframes fadein {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.header-tenis {
+    padding: 25px;
+    text-align: center;
+    border-radius: 12px 12px 0 0;
+    color: white;
+    font-weight: 800;
+}
+
+/* Tabla elegante */
+.tabla-elegante {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.tabla-elegante td {
+    padding: 14px 10px;
+    font-size: 17px;
+    border-bottom: 1px solid #ddd;
+    color: #444;
+}
+
+.tabla-elegante strong {
+    color: #111;
+}
+
+/* Botón */
+.btn-saque {
+    background: #4b3ce6;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: 0.25s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.btn-saque:hover {
+    background: #3327c4;
+    transform: scale(1.06);
+}
+</style>
+
+
+<div class="contenido-principal">
+
+  <div class="header-tenis" style="margin: -35px -35px 20px -35px;">
+     <h1>Datos: {{ mymember.firstname }} {{ mymember.lastname }}</h1>
+  </div>
+
+  <table class="tabla-elegante">
+    <tbody>
+      <tr>
+        <td><strong>Phone:</strong></td>
+        <td>{{ mymember.phone }}</td>
+      </tr>
+      <tr>
+        <td><strong>Member since:</strong></td>
+        <td>{{ mymember.joined_date }}</td>
+      </tr>
+      <tr>
+        <td><strong>Documento:</strong></td>
+        <td>{{ mymember.Documento }}</td>
+      </tr>
+      <tr>
+        <td><strong>Email:</strong></td>
+        <td>{{ mymember.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="text-align: center; margin-top: 30px;">
+    <a href="/members" class="btn-saque">Volver a Members</a>
+  </div>
+
+</div>
 
 {% endblock %}

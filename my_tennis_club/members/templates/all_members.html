@@ -1,16 +1,137 @@
 {% extends "master.html" %}
 
 {% block title %}
-  My Tennis Club - List of all members
+  My Tennis Club - Members
 {% endblock %}
 
-
 {% block content %}
-  <h1>Members</h1>
-  
-  <ul>
-    {% for x in mymembers %}
-      <li><a href="details/{{ x.id }}">{{ x.firstname }} {{ x.lastname }}</a></li>
-    {% endfor %}
-  </ul>
+
+<style>
+
+/* Burbujas animadas */
+.members-bg::before,
+.members-bg::after {
+    content: '';
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    background: rgba(255,255,255,0.22);
+    border-radius: 50%;
+    animation: float 6s infinite ease-in-out;
+}
+
+.members-bg::after {
+    width: 320px;
+    height: 320px;
+    bottom: -60px;
+    right: -60px;
+    animation-duration: 8s;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-25px); }
+    100% { transform: translateY(0); }
+}
+
+/* Tarjeta */
+.members-card {
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(5px);
+    max-width: 600px;
+    margin: auto;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    animation: fadein 0.8s ease;
+}
+
+@keyframes fadein {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Título */
+.members-title {
+    font-size: 40px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* Link HOME */
+.members-home {
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+    display: inline-block;
+    margin-bottom: 20px;
+    transition: 0.2s;
+}
+
+.members-home:hover {
+    color: #111;
+    transform: scale(1.05);
+}
+
+/* Lista de miembros */
+.members-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.members-list li {
+    background: #fff;
+    margin-bottom: 12px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    transition: 0.25s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* Links de detalle */
+.members-list a {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    color: #4a39c2;
+    transition: 0.2s;
+}
+
+.members-list li:hover {
+    transform: scale(1.03);
+    border-color: #4a39c2;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.members-list a:hover {
+    color: #3424a8;
+}
+</style>
+
+
+<div class="members-bg">
+    <div class="members-card">
+        
+        <a href="/" class="members-home">⬅ HOME</a>
+
+        <h1 class="members-title">Members</h1>
+
+        <ul class="members-list">
+            {% for x in mymembers %}
+                <li>
+                    <a href="details/{{ x.id }}">
+                        {{ x.firstname }} {{ x.lastname }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>
+
 {% endblock %}
