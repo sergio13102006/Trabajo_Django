@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Black Friday — Super Ofertas</title>
+
+<!-- Fuente -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#06060a;
+    --panel:#0f1720;
+    --muted:#9aa6bd;
+    --accent:#ffb800; /* amarillo suave para CTA */
+    --accent-2:#ff6b6b; /* rojo suave para badges */
+    --glass: rgba(255,255,255,0.04);
+    --card:#0b1220;
+    --radius:14px;
+    --shadow: 0 12px 40px rgba(2,6,23,0.6);
+    --soft-shadow: 0 8px 30px rgba(2,6,23,0.5);
+    --trans: 320ms cubic-bezier(.2,.9,.3,1);
+  }
+
+  /* Reset / base */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,Segoe UI,Arial;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(123,140,181,0.03), transparent 8%),
+                radial-gradient(900px 400px at 90% 80%, rgba(143,166,204,0.02), transparent 6%),
+                linear-gradient(180deg, var(--bg), #0b0c10 120%);
+    color:#e6eefc;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  a{color:inherit;text-decoration:none}
+
+  /* Header */
+  header{
+    position:sticky; top:0; z-index:80;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--glass);
+  }
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{
+    width:48px; height:48px; border-radius:12px;
+    background: linear-gradient(135deg, rgba(255,184,0,0.18), rgba(255,107,107,0.12));
+    display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  }
+  .brand .title{font-weight:700; font-size:18px}
+  nav{display:flex;gap:12px;align-items:center}
+  nav a{color:var(--muted); padding:8px 10px; border-radius:10px; transition: background var(--trans), color var(--trans);}
+  nav a:hover{background:rgba(255,255,255,0.02); color:var(--accent)}
+
+  .controls{display:flex;gap:8px;align-items:center}
+  .btn{
+    background: linear-gradient(90deg,var(--accent), #ffc94d);
+    border:none;padding:10px 14px;border-radius:12px;color:#08101a;font-weight:600;cursor:pointer;
+    box-shadow: 0 8px 24px rgba(255,184,0,0.08);
+    transition: transform 140ms ease;
+  }
+  .btn:active{transform:scale(.98)}
+  .ghost{
+    background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer;
+  }
+
+  /* Hero big banner */
+  .hero{
+    padding:56px 22px 40px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-card{
+    width:100%; max-width:1200px; border-radius:20px; padding:28px; display:flex; gap:22px; align-items:center;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: var(--soft-shadow);
+  }
+  .hero-left{flex:1}
+  .hero-right{width:420px; display:flex; align-items:center; justify-content:center}
+  .hero h1{font-size:36px; margin:0 0 8px}
+  .hero p{color:var(--muted); margin:0 0 14px}
+  .hero-cta{display:flex; gap:12px; margin-top:8px}
+  .hero-badge{display:inline-flex; align-items:center; gap:8px; background:linear-gradient(90deg,#2a2f45, #202533); padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.03); color:var(--muted); font-weight:600}
+
+  /* Countdown */
+  .countdown{font-weight:700; font-size:18px; color:var(--accent-2);}
+
+  /* Products grid */
+  main{max-width:1200px;margin:30px auto;padding:0 18px}
+  .grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:18px}
+
+  .product-card{
+    border-radius:14px; padding:16px; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.03); box-shadow: 0 8px 28px rgba(2,6,23,0.5);
+    transition: transform var(--trans), box-shadow var(--trans), background var(--trans);
+    position:relative; overflow:hidden; transform-style:preserve-3d;
+  }
+  .product-card:hover{ transform: translateY(-8px) rotateX(4deg); box-shadow: 0 18px 40px rgba(2,6,23,0.7); }
+
+  .product-media{
+    height:150px; border-radius:10px; margin-bottom:12px; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.02);
+    font-weight:700; color:var(--muted);
+  }
+  .product-title{font-weight:600; font-size:16px; margin-bottom:6px}
+  .product-desc{font-size:13px; color:var(--muted); margin-bottom:10px}
+  .price-row{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .price{font-weight:700; color:#fff}
+  .price-old{font-size:13px; color:var(--muted); text-decoration:line-through; margin-right:8px}
+
+  /* Badge percent */
+  .badge{
+    position:absolute; left:12px; top:12px; background:linear-gradient(90deg,#3b1f1f, #ff6b6b);
+    color:white;padding:6px 10px;border-radius:10px;font-weight:700;font-size:13px; box-shadow:0 6px 18px rgba(255,107,107,0.12);
+  }
+
+  /* add button small */
+  .add-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer}
+  .add-btn:hover{background:rgba(255,255,255,0.02); color:var(--accent); border-color: rgba(255,255,255,0.08) }
+
+  /* Floating cart */
+  .cart-fab{
+    position:fixed; right:18px; bottom:18px; z-index:90;
+    background: linear-gradient(90deg, #ffb800, #ffdc6b); color:#081018;
+    padding:14px 18px; border-radius:14px; font-weight:700; box-shadow: 0 18px 40px rgba(255,184,0,0.08); cursor:pointer;
+    display:flex; gap:10px; align-items:center;
+  }
+  .cart-count{background:rgba(0,0,0,0.1); padding:4px 8px; border-radius:999px; font-weight:700; color:#081018}
+
+  /* Cart modal */
+  .cart-modal{
+    position:fixed; right:16px; bottom:80px; width:360px; max-height:70vh; overflow:auto; z-index:200;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px; border:1px solid rgba(255,255,255,0.03); box-shadow: var(--shadow); padding:12px;
+  }
+  .cart-item{display:flex; gap:10px; align-items:center; padding:8px 4px; border-bottom:1px solid rgba(255,255,255,0.02)}
+  .cart-item:last-child{border-bottom:0}
+  .cart-item .meta{flex:1}
+  .qty-controls{display:flex; gap:6px; align-items:center}
+  .circle-btn{width:30px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,0.03); background:transparent; color:var(--muted); cursor:pointer}
+
+  /* Checkout btn */
+  .checkout{margin-top:10px; width:100%; padding:10px; border-radius:10px; border:none; cursor:pointer; background:linear-gradient(90deg,#ff6b6b,#ffb800); font-weight:700; color:#081018}
+
+  /* Footer */
+  footer{padding:28px;text-align:center;color:var(--muted); margin-top:34px}
+
+  /* responsive */
+  @media(max-width:760px){
+    .hero-card{flex-direction:column; text-align:center}
+    .hero-right{width:100%}
+    .cart-modal{right:12px; left:12px; bottom:72px; width:auto}
+    header{padding:12px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">BF</div>
+    <div>
+      <div class="title">Black Friday Shop</div>
+      <div style="font-size:12px;color:var(--muted)">Ofertas limitadas</div>
+    </div>
+  </div>
+
+  <nav>
+    <a href="#productos">Productos</a>
+    <a href="#ofertas">Ofertas</a>
+    <a id="open-cart">Carrito</a>
+    <div class="controls">
+      <button class="ghost" id="open-login">Login</button>
+      <button class="btn" id="cta-shop">Comprar ahora</button>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-card">
+    <div class="hero-left">
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px">
+        <div class="hero-badge">BLACK FRIDAY — HASTA 70% OFF</div>
+        <div class="countdown" id="hero-countdown">Cargando...</div>
+      </div>
+
+      <h1>Ofertas masivas — Descuentos reales</h1>
+      <p>Este fin se desata el Black Friday con las mejores ofertas en software, temas, plantillas y consultorías. Stock limitado.</p>
+
+      <div class="hero-cta">
+        <button class="btn" id="cta-view-products">Ver productos</button>
+        <button class="ghost" id="cta-terms">Términos</button>
+      </div>
+
+      <div style="margin-top:16px;color:var(--muted);font-size:13px">
+        <strong>Envío instantáneo</strong> · Garantía 30 días · Pago seguro
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <!-- Visual hero card: producto destacado -->
+      <div style="width:320px;border-radius:14px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Destacado</div>
+        <div style="height:140px;border-radius:10px;background:linear-gradient(135deg,#121421,#0b1118);display:flex;align-items:center;justify-content:center;margin-bottom:12px;color:var(--muted);">Pack Super PRO</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div>
+            <div style="font-weight:700">Pack Super PRO</div>
+            <div style="font-size:13px;color:var(--muted)">Todo lo que necesitas + soporte</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:800;font-size:18px;color:var(--accent)">45% OFF</div>
+            <div style="color:var(--muted);text-decoration:line-through">125.00</div>
+            <div style="font-weight:800;font-size:18px;margin-top:6px">$68.75</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center">
+          <button class="btn" onclick="addToCart('p-super')">Añadir</button>
+          <button class="ghost" onclick="document.getElementById('open-login').click()">Comprar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Products listing -->
+<main id="productos">
+  <h2 style="margin-bottom:8px">Productos destacados</h2>
+  <p style="color:var(--muted); margin-top:0; margin-bottom:20px">Desplázate y añade lo que quieras. El carrito se guarda en tu navegador.</p>
+
+  <div class="grid" id="products-grid">
+    <!-- Se llenará por JS -->
+  </div>
+</main>
+
+<!-- Cart Floating -->
+<div class="cart-fab" id="cart-fab" title="Abrir carrito">
+  🛒 Carrito <span class="cart-count" id="cart-count">0</span>
+</div>
+
+<!-- Cart modal (se crea por JS) -->
+
+<!-- Login modal simple -->
+<div id="login-modal" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.6);align-items:center;justify-content:center;z-index:120;">
+  <div style="width:100%;max-width:420px;margin:auto;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="font-weight:700">Iniciar sesión</div>
+      <button style="background:transparent;border:none;color:var(--muted);cursor:pointer" id="close-login">✕</button>
+    </div>
+    <label style="display:block;margin-bottom:6px;color:var(--muted)">Usuario</label>
+    <input id="login-user" placeholder="admin" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;margin-bottom:10px">
+    <label style="display:block;margin-bottom:6px;color:var(--muted)">Contraseña</label>
+    <input id="login-pass" placeholder="1234" type="password" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;margin-bottom:12px">
+    <div style="display:flex;gap:10px">
+      <button class="btn" id="do-login">Entrar</button>
+      <button class="ghost" id="do-close-login">Cancelar</button>
+    </div>
+    <div id="login-error" style="color:#ff6b6b;margin-top:10px;display:none">Credenciales incorrectas</div>
+  </div>
+</div>
+
+<footer>
+  © 2025 Black Friday Shop — Ofertas por tiempo limitado. Pago seguro.
+</footer>
+
+<script>
+/* ---------- Datos de productos (puedes personalizar) ---------- */
+const PRODUCTS = [
+  { id:'p1', title:'Tema Profesional', desc:'Tema limpio, responsive y rápido', price: 29.99, off: 50 }, // off = %
+  { id:'p2', title:'Pack UI Kit', desc:'Componentes y plantillas UI', price: 49.99, off: 40 },
+  { id:'p3', title:'App Móvil (Starter)', desc:'Prototipo + assets', price: 79.00, off: 35 },
+  { id:'p4', title:'Consultoría 1h', desc:'Revisión y roadmap', price: 39.00, off: 30 },
+  { id:'p5', title:'Plugin SEO', desc:'Optimiza tu site', price: 19.00, off: 60 },
+  { id:'p6', title:'Tema eCommerce', desc:'Shop listo para vender', price: 99.00, off: 45 }
+];
+
+/* ---------- Helpers ---------- */
+const money = v => '$' + v.toFixed(2);
+function discountedPrice(price, off){ return +(price * (1 - off/100)).toFixed(2); }
+
+/* --------- Render productos a grid ---------- */
+const grid = document.getElementById('products-grid');
+function renderProducts(){
+  grid.innerHTML = '';
+  for(const p of PRODUCTS){
+    const dPrice = discountedPrice(p.price, p.off);
+    const card = document.createElement('div'); card.className = 'product-card';
+    card.innerHTML = `
+      <div class="badge">${p.off}%</div>
+      <div class="product-media">${p.title}</div>
+      <div class="product-title">${p.title}</div>
+      <div class="product-desc">${p.desc}</div>
+      <div class="price-row">
+        <div>
+          <span class="price-old">${money(p.price)}</span>
+          <span class="price">${money(dPrice)}</span>
+        </div>
+        <div>
+          <button class="add-btn" data-id="${p.id}">Añadir</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  }
+  // attach handlers
+  document.querySelectorAll('.add-btn').forEach(b => {
+    b.addEventListener('click', ()=> addToCart(b.dataset.id));
+  });
+}
+renderProducts();
+
+/* ---------- Cart (localStorage) ---------- */
+let CART = JSON.parse(localStorage.getItem('bf_cart_v1') || '{}');
+function saveCart(){ localStorage.setItem('bf_cart_v1', JSON.stringify(CART)); updateCartCount(); }
+function cartCount(){ return Object.values(CART).reduce((s,v)=>s+v,0); }
+function updateCartCount(){ document.getElementById('cart-count').textContent = cartCount(); }
+updateCartCount();
+
+/* Add to cart by product id */
+function addToCart(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  if(!p){
+    // maybe special id like p-super
+    if(id === 'p-super'){
+      // add special product
+      const sp = { id:'p-super', title:'Pack Super PRO', desc:'Todo incluido', price:125, off:45 };
+      PRODUCTS.push(sp);
+      // re-render then add
+      renderProducts();
+    }
+  }
+  CART[id] = CART[id] ? CART[id] + 1 : 1;
+  saveCart();
+  pulseCart();
+  toast('Añadido al carrito');
+}
+
+/* show toast */
+function toast(msg){
+  const el = document.createElement('div');
+  el.textContent = msg;
+  el.style.position='fixed'; el.style.left='50%'; el.style.bottom='22px'; el.style.transform='translateX(-50%)';
+  el.style.background='rgba(0,0,0,0.8)'; el.style.color='white'; el.style.padding='10px 14px'; el.style.borderRadius='10px';
+  el.style.zIndex=9999; el.style.opacity=0; el.style.transition='opacity 200ms';
+  document.body.appendChild(el);
+  requestAnimationFrame(()=>el.style.opacity=1);
+  setTimeout(()=>{ el.style.opacity=0; setTimeout(()=>el.remove(),220); },1200);
+}
+
+/* pulse cart fab */
+function pulseCart(){ const el = document.getElementById('cart-fab'); el.animate([{transform:'scale(1)'},{transform:'scale(1.06)'},{transform:'scale(1)'}],{duration:350}); }
+
+/* Cart UI open */
+let cartModalEl = null;
+function openCartModal(){
+  // remove existing
+  if(cartModalEl && document.body.contains(cartModalEl)){ document.body.removeChild(cartModalEl); cartModalEl = null; return; }
+  cartModalEl = document.createElement('div'); cartModalEl.className='cart-modal';
+  let html = `<div style="font-weight:800;margin-bottom:8px">Tu carrito (${cartCount()})</div>`;
+  const items = Object.keys(CART);
+  if(items.length === 0){
+    html += `<div style="color:var(--muted)">Carrito vacío</div>`;
+    html += `<div style="margin-top:10px"><button class="btn" id="checkout-empty">Seguir comprando</button></div>`;
+    cartModalEl.innerHTML = html;
+    document.body.appendChild(cartModalEl);
+    document.getElementById('checkout-empty').addEventListener('click', ()=>{ cartModalEl.remove(); cartModalEl=null; document.getElementById('productos').scrollIntoView({behavior:'smooth'}); });
+    return;
+  }
+  let total = 0;
+  for(const id of items){
+    const qty = CART[id];
+    const prod = PRODUCTS.find(x=>x.id===id) || { id, title: id, price: 0, off:0 };
+    const price = discountedPrice(prod.price || 0, prod.off || 0);
+    total += price * qty;
+    html += `<div class="cart-item">
+      <div style="width:56px;height:44px;border-radius:8px;background:linear-gradient(135deg,#0a0d12,#0b1116);display:flex;align-items:center;justify-content:center;margin-right:8px">${prod.title.substring(0,2)}</div>
+      <div class="meta">
+        <div style="font-weight:700">${prod.title}</div>
+        <div style="font-size:13px;color:var(--muted)">${qty} × ${money(price)}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+        <div class="qty-controls">
+          <button class="circle-btn" data-id="${id}" data-act="dec">−</button>
+          <button class="circle-btn" data-id="${id}" data-act="inc">+</button>
+        </div>
+        <button style="background:transparent;border:none;color:var(--accent-2);cursor:pointer;font-size:13px" data-id="${id}" data-act="rem">Eliminar</button>
+      </div>
+    </div>`;
+  }
+  html += `<div style="margin-top:10px;font-weight:800">Total: ${money(total)}</div>`;
+  html += `<div style="margin-top:12px"><button class="checkout" id="checkout-btn">Pagar ahora</button></div>`;
+  cartModalEl.innerHTML = html;
+  document.body.appendChild(cartModalEl);
+
+  // attach handlers
+  cartModalEl.querySelectorAll('[data-act]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const id = btn.dataset.id;
+      const act = btn.dataset.act;
+      if(act === 'inc'){ CART[id] = (CART[id]||0) + 1; saveCart(); openCartModal(); }
+      if(act === 'dec'){ CART[id] = (CART[id]||0) - 1; if(CART[id] <= 0) delete CART[id]; saveCart(); openCartModal(); }
+      if(act === 'rem'){ delete CART[id]; saveCart(); openCartModal(); }
+    });
+  });
+  document.getElementById('checkout-btn').addEventListener('click', ()=>{
+    // simple checkout simulation
+    if(confirm('Simular pago — proceder a pagar?')){
+      CART = {}; saveCart(); toast('Pago simulado. Gracias!');
+      if(cartModalEl){ cartModalEl.remove(); cartModalEl=null; }
+    }
+  });
+}
+
+/* ---------- Events ---------- */
+document.getElementById('cart-fab').addEventListener('click', openCartModal);
+document.getElementById('open-cart').addEventListener('click', openCartModal);
+document.getElementById('cta-shop').addEventListener('click', ()=> document.getElementById('productos').scrollIntoView({behavior:'smooth'}));
+
+/* Login modal handlers */
+document.getElementById('open-login').addEventListener('click', ()=> document.getElementById('login-modal').style.display='flex' );
+document.getElementById('close-login').addEventListener('click', ()=> document.getElementById('login-modal').style.display='none' );
+document.getElementById('do-close-login').addEventListener('click', ()=> document.getElementById('login-modal').style.display='none' );
+
+document.getElementById('do-login').addEventListener('click', ()=>{
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value.trim();
+  const err = document.getElementById('login-error');
+  if(u === 'admin' && p === '1234'){
+    err.style.display = 'none';
+    document.getElementById('login-modal').style.display='none';
+    toast('Sesión iniciada (simulada)');
+  } else {
+    err.style.display = 'block';
+  }
+});
+
+/* ---------- Countdown (hero) ---------- */
+const heroCountdown = document.getElementById('hero-countdown');
+(function startHeroCountdown(){
+  // set target 36 hours ahead as example
+  const target = Date.now() + 36*3600*1000;
+  const int = setInterval(()=>{
+    const diff = Math.max(0, target - Date.now());
+    const h = Math.floor(diff/3600000);
+    const m = Math.floor((diff%3600000)/60000);
+    const s = Math.floor((diff%60000)/1000);
+    heroCountdown.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    if(diff<=0){ clearInterval(int); heroCountdown.textContent = '¡Ya empezó!'; }
+  }, 500);
+})();
+
+/* ---------- Tiny entrance animations ---------- */
+window.addEventListener('load', ()=>{
+  document.querySelectorAll('.product-card').forEach((c,i)=> {
+    c.style.opacity=0; c.style.transform='translateY(18px)';
+    setTimeout(()=>{ c.style.transition = 'transform 420ms cubic-bezier(.2,.9,.3,1), opacity 420ms'; c.style.opacity=1; c.style.transform='translateY(0)'; }, 120 + i*80);
+  });
+});
+
+/* ---------- small helpers ---------- */
+function discountedPriceFromId(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  return p ? discountedPrice(p.price, p.off) : 0;
+}
+
+/* ensure cart persisted across reloads and UI updated */
+window.addEventListener('beforeunload', ()=> saveCart());
+
+/* Utility: expose addToCart for hero buttons referencing specific ids */
+window.addToCart = addToCart;
+
+/* keyboard accessibility: Esc close cart modal & login */
+window.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape'){
+    if(document.getElementById('login-modal').style.display === 'flex') document.getElementById('login-modal').style.display='none';
+    if(cartModalEl){ cartModalEl.remove(); cartModalEl=null; }
+  }
+});
+
+</script>
+</body>
+</html>
