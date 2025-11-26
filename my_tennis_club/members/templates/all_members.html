@@ -1,136 +1,45 @@
 {% extends "master.html" %}
 
-{% block title %}
-  My Tennis Club - Members
+{% block styles %}
+{% load static %}
+
 {% endblock %}
 
 {% block content %}
 
-<style>
+<div class="container">
+    <div class="header">
+        <h1>📋 Lista de Miembros</h1>
+        <p>Mostrando: {% if mymembers|length > 5 %}10 de {{ mymembers|length }}{% else %}{{ mymembers|length }}{% endif %} persona{{ mymembers|length|pluralize:"s" }}</p>
+    </div>
 
-/* Burbujas animadas */
-.members-bg::before,
-.members-bg::after {
-    content: '';
-    position: absolute;
-    width: 220px;
-    height: 220px;
-    background: rgba(255,255,255,0.22);
-    border-radius: 50%;
-    animation: float 6s infinite ease-in-out;
-}
+    <div class="table-container">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in mymembers|slice:":5" %}
+                <tr onclick="window.location='details/{{ x.id }}';" style="cursor: pointer;">
+                    <td class="number">{{ forloop.counter }}</td>
+                    <td class="name">{{ x.firstname }}</td>
+                    <td>{{ x.lastname }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" style="text-align: center; padding: 40px;">No se encontraron miembros.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-.members-bg::after {
-    width: 320px;
-    height: 320px;
-    bottom: -60px;
-    right: -60px;
-    animation-duration: 8s;
-}
-
-@keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-25px); }
-    100% { transform: translateY(0); }
-}
-
-/* Tarjeta */
-.members-card {
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(5px);
-    max-width: 600px;
-    margin: auto;
-    padding: 35px;
-    border-radius: 20px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-    animation: fadein 0.8s ease;
-}
-
-@keyframes fadein {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Título */
-.members-title {
-    font-size: 40px;
-    font-weight: 800;
-    text-align: center;
-    margin-bottom: 25px;
-    color: #333;
-}
-
-/* Link HOME */
-.members-home {
-    text-decoration: none;
-    text-align: center;
-    font-weight: 600;
-    color: #333;
-    display: inline-block;
-    margin-bottom: 20px;
-    transition: 0.2s;
-}
-
-.members-home:hover {
-    color: #111;
-    transform: scale(1.05);
-}
-
-/* Lista de miembros */
-.members-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.members-list li {
-    background: #fff;
-    margin-bottom: 12px;
-    padding: 12px 18px;
-    border-radius: 12px;
-    border: 2px solid #eee;
-    transition: 0.25s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-}
-
-/* Links de detalle */
-.members-list a {
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 18px;
-    color: #4a39c2;
-    transition: 0.2s;
-}
-
-.members-list li:hover {
-    transform: scale(1.03);
-    border-color: #4a39c2;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-}
-
-.members-list a:hover {
-    color: #3424a8;
-}
-</style>
-
-
-<div class="members-bg">
-    <div class="members-card">
-        
-        <a href="/" class="members-home">⬅ HOME</a>
-
-        <h1 class="members-title">Members</h1>
-
-        <ul class="members-list">
-            {% for x in mymembers %}
-                <li>
-                    <a href="details/{{ x.id }}">
-                        {{ x.firstname }} {{ x.lastname }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-
+    <div class="footer">
+        <a href="/" class="home-link">⬅ Volver al inicio</a>
     </div>
 </div>
 

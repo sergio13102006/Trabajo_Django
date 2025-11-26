@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: #4a90e2; /* Un azul más moderno */
+    --primary-hover: #357ABD;
+    --border-color: #e0e0e0;
+    --background-light: #f9fafb;
+    --text-color: #333;
+    --header-text-color: #fff;
+    --card-bg: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-light);
+    color: var(--text-color);
+    margin: 0;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.content-card {
+    width: 100%;
+    max-width: 800px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    padding: 30px 40px;
+    text-align: center;
+}
+
+.home-link {
+    display: block;
+    text-align: left;
+    margin-bottom: 25px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.home-link:hover {
+    color: var(--primary-hover);
+}
+
+.page-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 30px;
+}
+
+.members-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.members-table thead th {
+    background-color: var(--primary-color);
+    color: var(--header-text-color);
+    padding: 15px 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.members-table th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.members-table th:last-child {
+    border-top-right-radius: 8px;
+}
+
+.members-table td {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    color: #555;
+}
+
+.members-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.members-table tbody tr:hover {
+    background-color: #f0f4f8; /* Un hover sutil */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .content-card {
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .members-table, .members-table thead, .members-table tbody, .members-table th, .members-table td, .members-table tr {
+        display: block;
+    }
+
+    .members-table thead {
+        display: none;
+    }
+
+    .members-table tr {
+        border-bottom: 2px solid var(--primary-color);
+        margin-bottom: 15px;
+    }
+
+    .members-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 5px;
+        border-bottom: 1px dotted var(--border-color);
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    .members-table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+
+    .members-table td:last-child {
+        border-bottom: 0;
+    }
+}

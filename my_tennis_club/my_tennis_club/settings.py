@@ -24,9 +24,13 @@ SECRET_KEY = 'django-insecure-av!lmq-k8_oc@f*gl-+!lla6q*vat_s!p3i=b-mfssv1kelj9a
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'productionfiles'
 
-
+STATIC_URL = 'static/'
+#Add this in your settings.py file:
+STATICFILES_DIRS = [
+    BASE_DIR.parent / 'mystaticfiles'
+]
 ALLOWED_HOSTS = ["*"]
 
 
@@ -50,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'my_tennis_club.urls'
